@@ -1,8 +1,33 @@
-import { Button, Card, Checkbox, Flex, Form, Input, Layout, Space } from "antd";
+import {
+  Alert,
+  Button,
+  Card,
+  Checkbox,
+  Flex,
+  Form,
+  Input,
+  Layout,
+  Space,
+} from "antd";
 import { LockFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../../components/icons/Logo";
+import { useMutation } from "@tanstack/react-query";
+import { Credentials } from "../../types/types";
+import { login } from "../../http/api";
+
+const loginUser = async (userData: Credentials) => {
+  const { data } = await login(userData);
+  return data;
+};
 
 const LoginPage = () => {
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      console.log("Login successful", data);
+    },
+  });
   return (
     <>
       <Layout
@@ -36,7 +61,14 @@ const LoginPage = () => {
               </Space>
             }
           >
-            <Form initialValues={{ remember: true }}>
+            <Form
+              initialValues={{ remember: true }}
+              onFinish={(values) => {
+                mutate({ email: values.username, password: values.password });
+                console.log(values);
+              }}
+            >
+              {isError && <Alert type="error" message={error.message} />}
               <Form.Item
                 name="username"
                 rules={[
@@ -75,19 +107,17 @@ const LoginPage = () => {
                   Forgot password
                 </a>
               </Flex>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ width: "100%" }}
+                  loading={isPending}
+                >
+                  Login
+                </Button>
+              </Form.Item>
             </Form>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: "100%" }}
-                onClick={() => {
-                  console.log("Login clicked");
-                }}
-              >
-                Login
-              </Button>
-            </Form.Item>
           </Card>
         </Space>
       </Layout>
