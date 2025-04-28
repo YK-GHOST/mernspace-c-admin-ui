@@ -35,15 +35,20 @@ const LoginPage = () => {
     queryFn: getSelf,
     enabled: false,
   });
+  const { mutate: logoutMutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: logout,
+    onSuccess: () => {
+      logoutFromStore();
+    },
+  });
   const { mutate, isPending, isError, error } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
     onSuccess: async () => {
       const selfDataPromise = await refetch();
       if (!hasPermission(selfDataPromise.data)) {
-        await logout();
-        logoutFromStore();
-        return;
+        logoutMutate();
       }
 
       setUser(selfDataPromise.data);
