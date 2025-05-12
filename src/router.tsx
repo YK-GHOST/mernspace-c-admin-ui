@@ -3,26 +3,32 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login/LoginPage";
 import Dashboard from "./layouts/Dashboard";
 import GeneralLayout from "./layouts/GeneralLayout";
-import CategoryPage from "./pages/CategoryPage";
+import Root from "./layouts/Root";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <Root />,
     children: [
       {
-        path: "",
-        element: <HomePage />,
+        path: "/",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "",
+            element: <HomePage />,
+          },
+        ],
       },
-    ],
-  },
-  {
-    path: "/auth",
-    element: <GeneralLayout />,
-    children: [
       {
-        path: "login",
-        element: <LoginPage />,
+        path: "/auth",
+        element: <GeneralLayout />,
+        children: [
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
+        ],
       },
     ],
   },
