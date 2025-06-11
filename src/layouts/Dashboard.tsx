@@ -19,9 +19,7 @@ import UserIcon from "../components/icons/UserIcon";
 import { FoodIcon } from "../components/icons/FoodIcon";
 import BasketIcon from "../components/icons/BasketIcon";
 import GiftIcon from "../components/icons/GiftIcon";
-import { logout } from "../http/api";
-import { useMutation } from "@tanstack/react-query";
-import { useLogout, useLogoutUser } from "../hooks/useLogoutUser";
+import { useLogoutUser } from "../hooks/useLogoutUser";
 
 const items = [
   {
@@ -85,7 +83,12 @@ const Dashboard = () => {
         <Layout>
           <Header style={{ padding: "0 16px", background: colorBgContainer }}>
             <Flex gap="middle" align="start" justify="space-between">
-              <Badge text="Global" color="#faad14" />
+              <Badge
+                text={
+                  user.role === "admin" ? "You're an admin" : user.tenant?.name
+                }
+                color="#faad14"
+              />
               <Space size={16}>
                 <Badge dot={true}>
                   <BellFilled />
