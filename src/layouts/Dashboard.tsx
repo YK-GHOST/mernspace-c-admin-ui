@@ -8,6 +8,7 @@ import {
   Layout,
   Menu,
   Space,
+  Tag,
   theme,
 } from "antd";
 const { Sider, Header, Content, Footer } = Layout;
@@ -82,13 +83,10 @@ const Dashboard = () => {
         </Sider>
         <Layout>
           <Header style={{ padding: "0 16px", background: colorBgContainer }}>
-            <Flex gap="middle" align="start" justify="space-between">
-              <Badge
-                text={
-                  user.role === "admin" ? "You're an admin" : user.tenant?.name
-                }
-                color="#faad14"
-              />
+            <Flex gap="middle" align="center" justify="space-between">
+              <Tag color="volcano">
+                {user.role === "admin" ? "You're an admin" : user.tenant?.name}
+              </Tag>
               <Space size={16}>
                 <Badge dot={true}>
                   <BellFilled />
@@ -117,15 +115,8 @@ const Dashboard = () => {
               </Space>
             </Flex>
           </Header>
-          <Content style={{ margin: "0 16px" }}>
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              <Outlet />
-            </div>
+          <Content style={{ margin: "16px" }}>
+            <Outlet />
           </Content>
           <Footer style={{ textAlign: "center" }}>
             Ant Design ©{new Date().getFullYear()} Created by Ant UED
