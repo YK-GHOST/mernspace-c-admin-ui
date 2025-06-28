@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import { Breadcrumb, Space, Table } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { Link, Navigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../http/api";
 import { User } from "../../types/types";
 import { useAuthStore } from "../../store";
+import UsersFilter from "./UsersFilter";
 
 const columns = [
   {
@@ -68,18 +69,8 @@ const Users = () => {
       />
       {isLoading && <div>Loading...</div>}
       {isError && <div>Error: {error.message}</div>}
-      {users && (
-        <div>
-          <Table dataSource={users} columns={columns} />;
-          {/* <ul>
-            {users.map((user: User) => (
-              <li key={user.id}>
-                {user.firstName} - {user.email}
-              </li>
-            ))}
-          </ul> */}
-        </div>
-      )}
+      <UsersFilter />
+      <Table dataSource={users} columns={columns} />;
     </Space>
   );
 };
