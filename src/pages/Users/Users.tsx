@@ -69,8 +69,12 @@ const Users = () => {
       />
       {isLoading && <div>Loading...</div>}
       {isError && <div>Error: {error.message}</div>}
-      <UsersFilter />
-      <Table dataSource={users} columns={columns} />;
+      <UsersFilter
+        onFilterChange={(filterName: string, filterValue: string) => {
+          console.log(filterName, filterValue);
+        }}
+      />
+      <Table dataSource={users} columns={columns} rowKey={"id"} />;
     </Space>
   );
 };
