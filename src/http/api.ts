@@ -7,3 +7,4 @@ export const login = (credentials: Credentials) =>
 export const logout = () => api.post("/auth/logout");
 export const self = () => api.get("/auth/self");
 export const getUsers = () => api.get("/users");
+export const getTenants = () => api.get("/tenants");

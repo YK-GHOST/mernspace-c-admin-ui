@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Breadcrumb, Button, Drawer, Space, Table } from "antd";
+import { Breadcrumb, Button, Drawer, Form, Space, Table } from "antd";
 import { PlusOutlined, RightOutlined } from "@ant-design/icons";
 import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +7,7 @@ import { getUsers } from "../../http/api";
 import { User } from "../../types/types";
 import { useAuthStore } from "../../store";
 import UsersFilter from "./UsersFilter";
+import UserForm from "./forms/UserForm";
 
 const columns = [
   {
@@ -97,7 +98,9 @@ const Users = () => {
           </Space>
         }
       >
-        <p>Some contents...</p>
+        <Form layout="vertical">
+          <UserForm />
+        </Form>
       </Drawer>
     </Space>
   );

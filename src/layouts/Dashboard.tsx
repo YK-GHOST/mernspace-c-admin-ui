@@ -28,35 +28,39 @@ const getMenuItems = (role: string) => {
       key: "/",
       icon: <Icon component={Home} />,
       label: <NavLink to="/">Home</NavLink>,
+      priority: 1,
     },
     {
-      key: "/restaurants",
+      key: "/tenants",
       icon: <Icon component={FoodIcon} />,
-      label: <NavLink to="/restaurants">Restaurants</NavLink>,
+      label: <NavLink to="/tenants">Restaurants</NavLink>,
+      priority: 3,
     },
     {
       key: "/products",
       icon: <Icon component={BasketIcon} />,
       label: <NavLink to="/products">Products</NavLink>,
+      priority: 4,
     },
     {
       key: "/promos",
       icon: <Icon component={GiftIcon} />,
       label: <NavLink to="/promos">Promos</NavLink>,
+      priority: 5,
     },
   ];
 
+  const items = [...baseItems];
+
   if (role === "admin") {
-    return [
-      ...baseItems,
-      {
-        key: "/users",
-        icon: <Icon component={UserIcon} />,
-        label: <NavLink to="/users">Users</NavLink>,
-      },
-    ];
+    items.push({
+      key: "/users",
+      icon: <Icon component={UserIcon} />,
+      label: <NavLink to="/users">Users</NavLink>,
+      priority: 2,
+    });
   }
-  return baseItems;
+  return items.sort((a, b) => a.priority - b.priority);
 };
 
 const Dashboard = () => {
